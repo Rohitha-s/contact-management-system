@@ -42,3 +42,29 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+
+
+# given from chatgpt
+
+# dependencies
+node_modules/
+
+# Angular
+.angular/
+dist/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# VS Code
+.vscode/
+
+# Environment
+.env
+
+# OS files
+.DS_Store
+Thumbs.db

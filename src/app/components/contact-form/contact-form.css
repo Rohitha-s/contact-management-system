@@ -1,0 +1,43 @@
+::ng-deep .custom-ng-select .ng-select-container{
+  background:#1e293b !important;
+  border:1px solid #334155 !important;
+  color:white !important;
+  min-height:58px !important;
+  border-radius:12px !important;
+}
+
+::ng-deep .custom-ng-select .ng-placeholder{
+  color:#94a3b8 !important;
+}
+
+::ng-deep .ng-dropdown-panel{
+  background:#1e293b !important;
+  color:white !important;
+}
+
+/*Gives red color blinking in the error fields in form*/
+
+@keyframes blinkBorder {
+
+0%{
+border-color:#ef4444;
+box-shadow:0 0 0 rgba(239,68,68,.4);
+}
+
+50%{
+border-color:#dc2626;
+box-shadow:0 0 12px rgba(239,68,68,.8);
+}
+
+100%{
+border-color:#ef4444;
+box-shadow:0 0 0 rgba(239,68,68,.4);
+}
+
+}
+
+.animate-pulse{
+
+animation: blinkBorder 1s infinite;
+
+}

@@ -24,9 +24,11 @@
                 "input": "public"
               }
             ],
-            "styles": [
+              "styles": [
+              "node_modules/@danielmoncada/angular-datetime-picker/assets/style/picker.min.css",
+              "node_modules/@ng-select/ng-select/themes/default.theme.css",
               "src/styles.css"
-            ]
+              ]
           },
           "configurations": {
             "production": {

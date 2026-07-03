@@ -1,0 +1,53 @@
+<div class="min-h-screen bg-slate-950 text-white py-8 px-4">
+  <div class="max-w-7xl mx-auto">
+    <div class="flex justify-between items-center mb-6">
+      <button routerLink="/" class="text-blue-400 hover:text-blue-300 text-base">
+        ← Back to Home
+      </button>
+      <button routerLink="/add-contact"
+        class="bg-blue-600 hover:bg-blue-700 px-5 py-2.5 rounded-lg text-base font-medium transition">
+        Add Contact
+      </button>
+    </div>
+    <h2 class="text-2xl font-bold mb-6">Contacts Stored</h2>
+    <!-- Search -->
+    <input [(ngModel)]="searchText" placeholder="Search Contact..."
+      class="w-full mb-8 px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
+    <!-- Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div *ngFor="let contact of filteredContacts"
+        class="bg-slate-900 rounded-xl p-5 shadow-lg border border-slate-800 hover:border-blue-500 transition">
+        <!-- Avatar -->
+        <div class="flex items-center gap-4 mb-5">
+          <div
+            class="w-14 h-14 rounded-full bg-blue-600 flex items-center justify-center text-xl font-bold">
+            {{ contact.name.charAt(0).toUpperCase() }}
+          </div>
+          <div>
+            <h2 class="text-xl font-semibold">{{ contact.name }}</h2>
+            <p class="text-slate-400 text-sm">{{ contact.gender }}</p>
+          </div>
+        </div>
+        <div class="space-y-2 text-base">
+          <p><span class="font-semibold">Email : </span>{{ contact.email }}</p>
+          <p><span class="font-semibold">Phone : </span>{{ contact.phone }}</p>
+          <p><span class="font-semibold">D.O.B : </span>{{ contact.dob | date:'dd/MM/yyyy' }}</p>
+          <p><span class="font-semibold">Location : </span>{{ contact.address }}</p>
+        </div>
+        <!-- Buttons -->
+        <div class="flex justify-between mt-6">
+          <button
+            (click)="editContact(contact)"
+            class=" w-28 bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg text-sm font-medium transition">
+            Edit
+          </button>
+          <button
+            (click)="deleteContact(contact.id)"
+            class=" w-28 bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-lg text-sm font-medium transition">
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

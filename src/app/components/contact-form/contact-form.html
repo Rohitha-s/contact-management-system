@@ -1,0 +1,107 @@
+<form [formGroup]="contactForm" (ngSubmit)="addContact()">
+  <div class="bg-slate-900 rounded-2xl border border-slate-800 shadow-xl p-8">
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold text-white">
+        {{ editingContactId ? 'Update Contact' : 'Add New Contact' }}
+      </h1>
+      <br>
+      @if(formSubmitted && contactForm.invalid){
+        <div class="bg-red-600 mb-4 rounded-lg border border-red-500 px-1 py-1">
+          <p class="text-white text-sm font-medium">
+          Please fill all the required fields correctly.</p>
+        </div>
+      }
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <div>
+        <label class="block text-slate-300 font-medium mb-2">
+          Name <span class="text-red-500">*</span>
+        </label>
+        <input type="text" placeholder="Enter your Name" formControlName="name"
+          class="w-full bg-slate-800 border border-slate-700 text-white placeholder-slate-400 rounded-lg px-4 py-3"
+          [ngClass]="{'border-red-500 animate-pulse': f.name.touched && f.name.invalid,
+          'border-slate-700': !(f.name.touched && f.name.invalid)}">
+        @if(f.name.touched && f.name.errors?.['required']){
+          <p class="text-red-500 text-sm mt-1">Name is required</p>}
+      </div>
+      <div>
+        <label class="block text-slate-300 font-medium mb-2">
+          Phone Number <span class="text-red-500">*</span>
+        </label>
+        <input type="text" placeholder="Enter your Phone Number" formControlName="phone" maxlength="10" inputmode="numeric"
+          class="w-full bg-slate-800 border border-slate-700 text-white placeholder-slate-400 rounded-lg px-4 py-3"
+          [ngClass]="{'border-red-500 animate-pulse': f.phone.touched && f.phone.invalid,
+          'border-slate-700': !(f.phone.touched && f.phone.invalid)}">
+        @if(f.phone.touched){
+        @if(f.phone.touched && f.phone.errors?.['required']){
+          <p class="text-red-500 text-sm mt-1">Phone number required</p>}
+        @if(f.phone.errors?.['pattern']){
+          <p class="text-red-500 text-xs mt-1">Phone number must contain exactly 10 digits</p>}}
+      </div>
+      <div>
+        <label class="block text-slate-300 font-medium mb-2">
+          Email <span class="text-red-500">*</span>
+        </label>
+        <input type="email" placeholder="Enter your Email" formControlName="email"
+          class="w-full bg-slate-800 border border-slate-700 text-white placeholder-slate-400 rounded-lg px-4 py-3"
+          [ngClass]="{'border-red-500 animate-pulse': f.email.touched && f.email.invalid,
+          'border-slate-700': !(f.email.touched && f.email.invalid)}">
+        @if(f.email.touched){
+        @if(f.email.errors?.['required']){
+          <p class="text-red-500 text-xs mt-1">Email is required</p>}
+        @if(f.email.errors?.['email']){
+          <p class="text-red-500 text-xs mt-1">Enter a valid email address</p>}}
+      </div>
+      <div>
+        <label class="block text-slate-300 font-medium mb-2">Gender</label>
+        <ng-select
+          [items]="genders"
+          bindLabel="name"
+          bindValue="name"
+          [clearable]="false"
+          placeholder="Select Gender"
+          formControlName="gender"
+          class="custom-ng-select">
+        </ng-select>
+      </div>
+    </div>
+    <div class="mt-5">
+      <label class="block text-slate-300 font-medium mb-2">D.O.B</label>
+      <input
+        [owlDateTime]="picker"
+        [owlDateTimeTrigger]="picker"
+        formControlName="dob"
+        placeholder="Select Date"
+        class="w-full bg-slate-800 border border-slate-700 text-white placeholder-slate-400 rounded-lg px-4 py-3">
+      <owl-date-time
+        #picker
+        [pickerType]="'calendar'">
+      </owl-date-time>
+    </div>
+    <div class="mt-5">
+      <label class="block text-slate-300 font-medium mb-2">Address</label>
+      <textarea
+        rows="3"
+        placeholder="Enter your Address"
+        formControlName="address"
+        class="w-full bg-slate-800 border border-slate-700 text-white placeholder-slate-400 rounded-lg px-4 py-3">
+      </textarea>
+    </div>
+    <!-- Button -->
+    <div
+      class="sticky bottom-0 left-0 right-0 bg-slate-900 border-t border-slate-700
+      px-6 py-4 flex justify-end gap-3 rounded-b-2xl">
+      <button type="button" routerLink="/contacts"
+          class="px-6 py-2 rounded-lg border border-slate-600 text-slate-300 hover:bg-slate-800 transition">
+          Cancel </button>
+      @if(editingContactId){
+      <button type="submit"
+          class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium transition">
+          Update Contact</button>}
+      @else{
+      <button type="submit"
+          class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition">
+          Add Contact</button>}
+    </div>
+  </div>
+</form>
