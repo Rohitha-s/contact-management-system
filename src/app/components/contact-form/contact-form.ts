@@ -15,6 +15,7 @@ from '@danielmoncada/angular-datetime-picker';
 import { RouterLink } from '@angular/router';
 import { Router } from '@angular/router';
 import { NgClass } from '@angular/common';
+import { AbstractControl, ValidationErrors } from '@angular/forms';
 
 
 @Component({
@@ -53,7 +54,39 @@ export class ContactForm{
     });
   }
 }
-  
+
+// phone number validator
+  onPhoneInput(event: Event): void {
+  const input = event.target as HTMLInputElement;
+  // Keep only digits
+  const numbersOnly = input.value.replace(/\D/g, '');
+  // Maximum 10 digits
+  const phone = numbersOnly.substring(0, 10);
+  input.value = phone;
+  this.contactForm.patchValue(
+    { phone: phone },
+    { emitEvent: false }
+  );
+}
+
+// age validator
+ageValidator(control: AbstractControl): ValidationErrors | null {
+  if (!control.value) {
+    return null;
+  }
+  const dob = new Date(control.value);
+  const today = new Date();
+  let age = today.getFullYear() - dob.getFullYear();
+  const monthDifference = today.getMonth() - dob.getMonth();
+  if (
+    monthDifference < 0 ||
+    (monthDifference === 0 && today.getDate() < dob.getDate())
+  ) {
+    age--;
+  }
+  return age >= 18 ? null : { underAge: true };
+}
+
 
 genders = [
   { name: 'Male' },
@@ -71,7 +104,7 @@ genders = [
     phone: new FormControl('', [Validators.required,Validators.pattern(/^[0-9]{10}$/)]),
     email: new FormControl('', [Validators.required,Validators.email]),
     gender: new FormControl(null),
-    dob: new FormControl(''),
+    dob: new FormControl('', [Validators.required,this.ageValidator.bind(this)]),
     address: new FormControl('')
   });
 

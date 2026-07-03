@@ -25,19 +25,39 @@
           <p class="text-red-500 text-sm mt-1">Name is required</p>}
       </div>
       <div>
-        <label class="block text-slate-300 font-medium mb-2">
-          Phone Number <span class="text-red-500">*</span>
-        </label>
-        <input type="text" placeholder="Enter your Phone Number" formControlName="phone" maxlength="10" inputmode="numeric"
-          class="w-full bg-slate-800 border border-slate-700 text-white placeholder-slate-400 rounded-lg px-4 py-3"
-          [ngClass]="{'border-red-500 animate-pulse': f.phone.touched && f.phone.invalid,
-          'border-slate-700': !(f.phone.touched && f.phone.invalid)}">
-        @if(f.phone.touched){
-        @if(f.phone.touched && f.phone.errors?.['required']){
-          <p class="text-red-500 text-sm mt-1">Phone number required</p>}
-        @if(f.phone.errors?.['pattern']){
-          <p class="text-red-500 text-xs mt-1">Phone number must contain exactly 10 digits</p>}}
-      </div>
+  <label class="block text-slate-300 font-medium mb-2">
+    Phone Number <span class="text-red-500">*</span>
+  </label>
+
+  <input
+    type="text"
+    placeholder="Enter your Phone Number"
+    formControlName="phone"
+    maxlength="10"
+    inputmode="numeric"
+    (input)="onPhoneInput($event)"
+    class="w-full bg-slate-800 border border-slate-700 text-white placeholder-slate-400 rounded-lg px-4 py-3"
+    [ngClass]="{
+      'border-red-500 animate-pulse': f.phone.touched && f.phone.invalid,
+      'border-slate-700': !(f.phone.touched && f.phone.invalid)
+    }">
+
+  @if(f.phone.touched){
+
+    @if(f.phone.errors?.['required']){
+      <p class="text-red-500 text-sm mt-1">
+        Phone number is required
+      </p>
+    }
+
+    @if(f.phone.errors?.['pattern']){
+      <p class="text-red-500 text-sm mt-1">
+        Phone number must contain exactly 10 digits
+      </p>
+    }
+
+  }
+</div>
       <div>
         <label class="block text-slate-300 font-medium mb-2">
           Email <span class="text-red-500">*</span>
@@ -77,6 +97,11 @@
         #picker
         [pickerType]="'calendar'">
       </owl-date-time>
+      @if(f.dob.touched && f.dob.errors?.['underAge']){
+        <p class="text-red-500 text-sm mt-1">
+          Age must be 18 years or above.
+        </p>}
+
     </div>
     <div class="mt-5">
       <label class="block text-slate-300 font-medium mb-2">Address</label>
